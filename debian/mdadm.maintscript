@@ -1,0 +1,5 @@
+rm_conffile /etc/init.d/mdadm-raid 3.4-2~
+rm_conffile /etc/init.d/mdadm 4.1-2ubuntu2~
+rm_conffile /etc/init.d/mdadm-waitidle 4.1-2ubuntu2~
+rm_conffile /etc/cron.d/mdadm 4.1-2ubuntu3~
+rm_conffile /etc/cron.daily/mdadm 4.1-2ubuntu3~

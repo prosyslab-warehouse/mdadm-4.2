@@ -1,0 +1,16 @@
+Description: Honor the debconf mdadm/autoscan setting in the systemd timer
+ Debian added an mdadm/autoscan template to allow users to disable this
+ feature via debconf. This is exposed as a variable in /etc/default/mdadm,
+ which is processed by a cronjob in Debian. Ubuntu has dropped the cronjob
+ and moved to a systemd timer, so we need to add our own processing.
+Author: dann frazier <dannf@ubuntu.com>
+
+--- a/systemd/mdmonitor-oneshot.service
++++ b/systemd/mdmonitor-oneshot.service
+@@ -10,4 +10,5 @@
+ Documentation=man:mdadm(8)
+ 
+ [Service]
+-ExecStart=BINDIR/mdadm --monitor --oneshot --scan
++EnvironmentFile=-/etc/default/mdadm
++ExecStart=sh -c '[ "$AUTOSCAN" != "true" ] || BINDIR/mdadm --monitor --oneshot --scan'
